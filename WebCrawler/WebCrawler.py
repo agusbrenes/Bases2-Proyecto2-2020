@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import re
+import regex
 import requests
 import pandas as pd
 import random
@@ -16,12 +17,19 @@ blacklist = ["a", "ante", "bajo", "cabe", "con", "contra", "de", "desde", "en", 
 
 def depuraString(lista):
     listaF = []
-    blacklist2 = [" ", "\\", "\n", "\t", "\b", "\r", "\f", ":", ",", "^", "!", "?", "¡", "¿", "(", ")", "[", "]", "{", "}", ";", "/", "*", "&", "%", "$", "#", "@", "~", "`", ">", "<", '"', "\'", "|", "-", "_", "+", "=", "«", "»"]
+    blacklist2 = [" ", "\\", "\n", "\t", "\b", "\r", "\f", ":", ",", "^", "º", "!", "?", "¡", "¿", "(", ")", "[", "]", "{", "}", ";", "/", "*", "&", "%", "$", "#", "@", "~", "`", ">", "<", '"', "\'", "|", "-", "_", "+", "=", "«", "»"]
     for i in range(0, len(lista)):
         filtered = ""
         for j in range(0, len(lista[i])):
-            if not (lista[i][j] in blacklist2):
+            if( re.search("^[0-9]$", lista[i][j]) ):
+                break
+            
+            if( re.search("^[a-zàèìòùáéíóúýâêîôûãñõäëïöüÿåæœçðøß]$", lista[i][j]) ):
                 filtered += lista[i][j]
+
+            else:
+                break
+                
         listaF.append(filtered)
     return listaF
 
@@ -78,4 +86,4 @@ def WebCrawler(url, count2):
 
         
 
-WebCrawler("https://es.wikipedia.org/wiki/Python", count)
+WebCrawler("https://es.wikipedia.org/wiki/Quercus_laurina", count)
