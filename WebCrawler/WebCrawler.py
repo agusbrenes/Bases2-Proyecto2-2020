@@ -27,6 +27,9 @@ def depuraString(lista):
             if( re.search("^[a-zàèìòùáéíóúýâêîôûãñõäëïöüÿåæœçðøß]$", lista[i][j]) ):
                 filtered += lista[i][j]
 
+            if(lista[i][j] in blacklist2):
+                continue
+
             else:
                 break
                 
